@@ -201,7 +201,7 @@ El agente mejora su comportamiento mediante **aprendizaje por refuerzo (Q-Learni
 1. Clonar repositorio:
 
 ```
-git clone <repo>
+git clone https://github.com/Daniel-615/AI-AGENT.git
 ```
 
 2. Ejecutar:
