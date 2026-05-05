@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://nqp4w0mom0oe"]
+
+[ext_resource type="Script" path="res://Scripts/grid_manager.gd" id="1_xe7pu"]
+[ext_resource type="Script" path="res://Scripts/agent.gd" id="2_24fhp"]
+
+[node name="Main" type="Node2D"]
+
+[node name="GridManager" type="Node2D" parent="."]
+script = ExtResource("1_xe7pu")
+
+[node name="Agent" type="Node2D" parent="."]
+script = ExtResource("2_24fhp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LabelRescatados" type="Label" parent="CanvasLayer"]
+offset_left = 1000.0
+offset_top = 40.0
+offset_right = 1106.0
+offset_bottom = 63.0
+text = "Rescatados: 0"
+
+[node name="LabelEstados" type="Label" parent="CanvasLayer"]
+offset_left = 1000.0
+offset_top = 70.0
+offset_right = 1066.0
+offset_bottom = 93.0
+text = "Estado: -"
+
+[node name="BarraEnergia" type="ProgressBar" parent="CanvasLayer"]
+modulate = Color(0, 1, 0, 1)
+self_modulate = Color(0, 1, 0, 1)
+offset_left = 1000.0
+offset_top = 10.0
+offset_right = 1180.0
+offset_bottom = 37.0
+value = 100.0
+
+[node name="LabelBFS" type="Label" parent="CanvasLayer"]
+offset_left = 800.0
+offset_top = 10.0
+offset_right = 840.0
+offset_bottom = 33.0
+
+[node name="LabelAEstrella" type="Label" parent="CanvasLayer"]
+offset_left = 800.0
+offset_top = 30.0
+offset_right = 840.0
+offset_bottom = 53.0
+
+[node name="LabelConocimiento" type="Label" parent="CanvasLayer"]
+offset_left = 800.0
+offset_top = 200.0
+offset_right = 840.0
+offset_bottom = 223.0
