@@ -92,6 +92,5 @@ func notificar_ui():
 		"con_peligro": knowledge.contar_por_tipo("peligro"),
 		"con_recarga": knowledge.contar_por_tipo("recarga")
 	}
-	# Verificación de seguridad para evitar el crash de 'null instance'
 	if hud and hud.has_method("actualizar"):
 		hud.actualizar(info)
