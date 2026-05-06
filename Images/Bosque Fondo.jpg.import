@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb0fnu51y66mo"
-path="res://.godot/imported/robot.png-76da536eef95e5b76be8d1b90128b52d.ctex"
+uid="uid://cma6lumv2yyx"
+path="res://.godot/imported/Bosque Fondo.jpg-41baeead4b544c29332d658902c0af9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/robot.png"
-dest_files=["res://.godot/imported/robot.png-76da536eef95e5b76be8d1b90128b52d.ctex"]
+source_file="res://Images/Bosque Fondo.jpg"
+dest_files=["res://.godot/imported/Bosque Fondo.jpg-41baeead4b544c29332d658902c0af9b.ctex"]
 
 [params]
 

@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://b2vbw6lkr8i2p"]
+
+[ext_resource type="Texture2D" uid="uid://cma6lumv2yyx" path="res://Images/Bosque Fondo.jpg" id="1_lnt83"]
+[ext_resource type="Script" uid="uid://dttqjxv3gdx4i" path="res://Scripts/Menu/menu.gd" id="1_p25xy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p25xy"]
+bg_color = Color(0, 0, 0, 0.36862746)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Menu" type="Control" unique_id=1863998886]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p25xy")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1294576890]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.581033, 0.58103293, 0.5810329, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=449009934]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lnt83")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2109846094]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.5
+offset_top = -161.5
+offset_right = 300.5
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="Play" type="Button" parent="VBoxContainer" unique_id=1081090236]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
+text = "Jugar"
+
+[node name="Options" type="Button" parent="VBoxContainer" unique_id=1098739405]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
+text = "Opciones
+"
+
+[node name="Quit" type="Button" parent="VBoxContainer" unique_id=251701360]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
+text = "Salir
+"
+
+[connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_quit_pressed"]

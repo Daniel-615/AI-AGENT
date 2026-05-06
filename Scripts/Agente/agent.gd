@@ -18,6 +18,8 @@ var temporizador := 0.0
 
 var ultimo_bfs_nodos := 0
 var ultimo_a_nodos := 0
+var textura_agente = preload("res://Sprites/robot.png")
+
 
 func _ready():
 	grid_manager = get_parent().get_node("GridManager")
@@ -27,12 +29,17 @@ func _ready():
 	interfaz_agente = get_node("InterfazAgente")
 	interfaz_agente.configurar(get_parent().get_node("CanvasLayer"))
 	
+	print("Método seleccionado:", Config.metodo_busqueda)
+	
 	actualizar_posicion_mundo()
 	actualizar_ui()
 	queue_redraw()
 
 
 func _process(delta):
+	if not Config.juego_iniciado:
+		return
+	
 	temporizador += delta
 	
 	if temporizador >= tiempo_entre_pasos:
@@ -48,6 +55,23 @@ func _process(delta):
 			actualizar_posicion_mundo()
 			verificar_celda_actual()
 			actualizar_ui()
+
+
+func calcular_camino(origen, destino):
+	if Config.metodo_busqueda == "BFS":
+		var camino = pathfinding.bfs(origen, destino, grid_manager)
+		ultimo_bfs_nodos = pathfinding.nodos_bfs
+		return camino
+	else:
+		var camino = pathfinding.a_estrella(
+			origen,
+			destino,
+			grid_manager,
+			base_conocimiento.memoria_peligro
+		)
+		ultimo_a_nodos = pathfinding.nodos_a_estrella
+		return camino
+
 
 func buscar_objetivo():
 	var personas = grid_manager.obtener_posiciones_personas()
@@ -66,21 +90,11 @@ func buscar_objetivo():
 	var mejor_camino_persona := []
 	
 	for persona in personas:
-		var camino_bfs = pathfinding.bfs(posicion_grid, persona, grid_manager)
-		var nodos_bfs_resultado = pathfinding.nodos_bfs
+		var camino = calcular_camino(posicion_grid, persona)
 		
-		var camino_a = pathfinding.a_estrella(posicion_grid, persona, grid_manager, base_conocimiento.memoria_peligro)
-		var nodos_a_resultado = pathfinding.nodos_a_estrella
-		
-		if camino_a.size() > 0:
-			print("Comparación hacia persona ", persona)
-			print("BFS nodos explorados: ", nodos_bfs_resultado)
-			print("A* nodos explorados: ", nodos_a_resultado)
-			
-			if mejor_camino_persona.size() == 0 or camino_a.size() < mejor_camino_persona.size():
-				mejor_camino_persona = camino_a
-				ultimo_bfs_nodos = nodos_bfs_resultado
-				ultimo_a_nodos = nodos_a_resultado
+		if camino.size() > 0:
+			if mejor_camino_persona.size() == 0 or camino.size() < mejor_camino_persona.size():
+				mejor_camino_persona = camino
 	
 	if mejor_camino_persona.size() == 0:
 		interfaz_agente.cambiar_estado("Sin camino a persona")
@@ -101,10 +115,13 @@ func buscar_objetivo():
 	var costo_regreso_recarga = INF
 	
 	for r in recargas:
-		var camino_recarga = pathfinding.a_estrella(mejor_camino_persona[-1], r, grid_manager, base_conocimiento.memoria_peligro)
+		var camino_recarga = calcular_camino(mejor_camino_persona[-1], r)
 		
 		if camino_recarga.size() > 0:
-			costo_regreso_recarga = min(costo_regreso_recarga, camino_recarga.size() * energy_system.costo_movimiento)
+			costo_regreso_recarga = min(
+				costo_regreso_recarga,
+				camino_recarga.size() * energy_system.costo_movimiento
+			)
 	
 	var costo_total_seguro = costo_ida + costo_regreso_recarga
 	
@@ -122,7 +139,7 @@ func buscar_objetivo():
 		var mejor_camino_recarga := []
 		
 		for r in recargas:
-			var camino = pathfinding.a_estrella(posicion_grid, r, grid_manager, base_conocimiento.memoria_peligro)
+			var camino = calcular_camino(posicion_grid, r)
 			
 			if camino.size() > 0:
 				if mejor_camino_recarga.size() == 0 or camino.size() < mejor_camino_recarga.size():
@@ -134,6 +151,7 @@ func buscar_objetivo():
 	
 	interfaz_agente.cambiar_estado("Esperando decisión")
 	actualizar_ui()
+
 
 func verificar_celda_actual():
 	if grid_manager.es_persona(posicion_grid):
@@ -147,6 +165,7 @@ func verificar_celda_actual():
 	if grid_manager.es_recarga(posicion_grid):
 		interfaz_agente.cambiar_estado("Recargando energía")
 		energy_system.recargar()
+		grid_manager.cambiar_valor_celda(posicion_grid, grid_manager.VACIO)
 		base_conocimiento.registrar(posicion_grid, base_conocimiento.RECARGA)
 		compromiso_rescate = false
 		
@@ -162,7 +181,7 @@ func verificar_celda_actual():
 			base_conocimiento.aprender_peligro(posicion_grid, 60)
 		
 		if objetivo_actual != Vector2i(-1, -1):
-			var camino_restante = pathfinding.a_estrella(posicion_grid, objetivo_actual, grid_manager, base_conocimiento.memoria_peligro)
+			var camino_restante = calcular_camino(posicion_grid, objetivo_actual)
 			var costo_restante = camino_restante.size() * energy_system.costo_movimiento
 			
 			if camino_restante.size() > 0 and energy_system.tiene_energia_suficiente(costo_restante):
@@ -174,8 +193,9 @@ func verificar_celda_actual():
 		else:
 			compromiso_rescate = false
 			camino_actual.clear()
-		
+	
 	actualizar_ui()
+
 
 func actualizar_posicion_mundo():
 	position = Vector2(
@@ -183,9 +203,17 @@ func actualizar_posicion_mundo():
 		posicion_grid.y * CELL_SIZE + CELL_SIZE / 2
 	)
 
+
 func _draw():
-	draw_circle(Vector2.ZERO, CELL_SIZE * 0.30, Color(1.0, 0.8, 0.1))
-	draw_circle(Vector2.ZERO, CELL_SIZE * 0.30, Color.BLACK, false, 2)
+	if textura_agente:
+		var size = CELL_SIZE * 0.8
+		var rect = Rect2(
+			Vector2(-size/2, -size/2),
+			Vector2(size, size)
+		)
+		
+		draw_texture_rect(textura_agente, rect, false)
+
 
 func actualizar_ui():
 	interfaz_agente.actualizar(
