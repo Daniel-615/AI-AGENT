@@ -44,7 +44,10 @@ func _process(delta):
 		return
 	
 	temporizador += delta
-	
+	if energy_system.energia <= 0:
+		interfaz_agente.cambiar_estado("Sin energía - detenido")
+		camino_actual.clear()
+		return
 	if temporizador >= tiempo_entre_pasos:
 		temporizador = 0.0
 		
