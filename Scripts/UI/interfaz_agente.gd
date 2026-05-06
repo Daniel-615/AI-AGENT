@@ -6,6 +6,9 @@ var label_estado: Label
 var label_bfs: Label
 var label_a_estrella: Label
 var label_conocimiento: Label
+var label_bitacora: Label
+var mensajes_bitacora := []
+var max_mensajes := 5
 
 func configurar(canvas_layer: CanvasLayer):
 	barra_energia = canvas_layer.get_node("BarraEnergia")
@@ -14,6 +17,7 @@ func configurar(canvas_layer: CanvasLayer):
 	label_bfs = canvas_layer.get_node("LabelBFS")
 	label_a_estrella = canvas_layer.get_node("LabelAEstrella")
 	label_conocimiento = canvas_layer.get_node("LabelConocimiento")
+	label_bitacora = canvas_layer.get_node("LabelBitacora")
 
 func actualizar(
 	personas_rescatadas: int,
@@ -35,3 +39,16 @@ func actualizar(
 
 func cambiar_estado(nuevo_estado: String):
 	label_estado.text = "Estado: " + nuevo_estado
+	
+func agregar_mensaje(mensaje: String):
+	mensajes_bitacora.append(mensaje)
+	
+	if mensajes_bitacora.size() > max_mensajes:
+		mensajes_bitacora.pop_front()
+	
+	var texto := "Bitácora:\n"
+	
+	for m in mensajes_bitacora:
+		texto += "- " + m + "\n"
+	
+	label_bitacora.text = texto

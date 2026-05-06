@@ -15,12 +15,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="AI-AGENT"
-run/main_scene="uid://b2vbw6lkr8i2p"
-config/features=PackedStringArray("4.6", "Forward Plus")
+run/main_scene="res://Escenas/menu.tscn"
+config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
 
-Config="*uid://d0q01oyhyx2da"
+Config="*res://Scripts/config.gd"
 
 [display]
 

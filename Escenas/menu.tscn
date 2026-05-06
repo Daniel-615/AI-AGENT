@@ -1,16 +1,16 @@
-[gd_scene format=3 uid="uid://b2vbw6lkr8i2p"]
+[gd_scene load_steps=4 format=3 uid="uid://b2vbw6lkr8i2p"]
 
-[ext_resource type="Texture2D" uid="uid://cma6lumv2yyx" path="res://Images/Bosque Fondo.jpg" id="1_lnt83"]
-[ext_resource type="Script" uid="uid://dttqjxv3gdx4i" path="res://Scripts/Menu/menu.gd" id="1_p25xy"]
+[ext_resource type="Script" path="res://Scripts/Menu/menu.gd" id="1_p25xy"]
+[ext_resource type="Texture2D" uid="uid://ciqw37oecw0xy" path="res://Images/fondo.jpg" id="2_e6t2q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p25xy"]
-bg_color = Color(0, 0, 0, 0.36862746)
+bg_color = Color(0, 0, 0, 0.368627)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="Menu" type="Control" unique_id=1863998886]
+[node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,26 +19,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p25xy")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1294576890]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.581033, 0.58103293, 0.5810329, 1)
+color = Color(0.581033, 0.581033, 0.581033, 1)
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=449009934]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_lnt83")
+texture = ExtResource("2_e6t2q")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2109846094]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,20 +53,20 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-[node name="Play" type="Button" parent="VBoxContainer" unique_id=1081090236]
+[node name="Play" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "Jugar"
 
-[node name="Options" type="Button" parent="VBoxContainer" unique_id=1098739405]
+[node name="Options" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "Opciones
 "
 
-[node name="Quit" type="Button" parent="VBoxContainer" unique_id=251701360]
+[node name="Quit" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")

@@ -150,3 +150,6 @@ func obtener_posiciones_recarga() -> Array:
 				estaciones.append(Vector2i(x, y))
 	
 	return estaciones
+	
+func esta_dentro_del_mapa(pos: Vector2i) -> bool:
+	return pos.y >= 0 and pos.y < grid.size() and pos.x >= 0 and pos.x < grid[pos.y].size()

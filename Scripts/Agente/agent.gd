@@ -6,6 +6,7 @@ var pathfinding: Node
 var energy_system: Node
 var base_conocimiento: Node
 var interfaz_agente: Node
+var sensor_agente: Node
 var posicion_grid := Vector2i(0, 0)
 var grid_manager: Node = null
 var objetivo_actual := Vector2i(-1, -1)
@@ -28,11 +29,13 @@ func _ready():
 	base_conocimiento = get_node("BaseConocimiento")
 	interfaz_agente = get_node("InterfazAgente")
 	interfaz_agente.configurar(get_parent().get_node("CanvasLayer"))
+	sensor_agente = get_node("SensorAgente")
 	
 	print("Método seleccionado:", Config.metodo_busqueda)
 	
 	actualizar_posicion_mundo()
 	actualizar_ui()
+	sensor_agente.percibir(posicion_grid, grid_manager, base_conocimiento, interfaz_agente)
 	queue_redraw()
 
 
@@ -52,7 +55,10 @@ func _process(delta):
 			posicion_grid = camino_actual.pop_front()
 			energy_system.consumir_movimiento()
 			
+			base_conocimiento.registrar(posicion_grid, base_conocimiento.CELDA_CONOCIDA)
+			
 			actualizar_posicion_mundo()
+			sensor_agente.percibir(posicion_grid, grid_manager, base_conocimiento, interfaz_agente)
 			verificar_celda_actual()
 			actualizar_ui()
 
@@ -74,11 +80,16 @@ func calcular_camino(origen, destino):
 
 
 func buscar_objetivo():
-	var personas = grid_manager.obtener_posiciones_personas()
+	var personas = base_conocimiento.obtener_posiciones_por_tipo(base_conocimiento.PERSONA_DETECTADA)
 	var recargas = grid_manager.obtener_posiciones_recarga()
 	
 	if personas.size() == 0:
-		interfaz_agente.cambiar_estado("Misión completada")
+		interfaz_agente.cambiar_estado("Explorando entorno")
+		camino_actual = buscar_celda_no_visitada()
+		
+		if camino_actual.size() == 0:
+			interfaz_agente.cambiar_estado("Sin zonas por explorar")
+		
 		actualizar_ui()
 		return
 	
@@ -158,6 +169,7 @@ func verificar_celda_actual():
 		personas_rescatadas += 1
 		grid_manager.cambiar_valor_celda(posicion_grid, grid_manager.VACIO)
 		base_conocimiento.registrar(posicion_grid, base_conocimiento.PERSONA_RESCATADA)
+		interfaz_agente.agregar_mensaje("Persona rescatada en " + str(posicion_grid))
 		objetivo_actual = Vector2i(-1, -1)
 		compromiso_rescate = false
 		camino_actual.clear()
@@ -165,6 +177,7 @@ func verificar_celda_actual():
 	if grid_manager.es_recarga(posicion_grid):
 		interfaz_agente.cambiar_estado("Recargando energía")
 		energy_system.recargar()
+		interfaz_agente.agregar_mensaje("Estación de recarga encontrada en " + str(posicion_grid))
 		grid_manager.cambiar_valor_celda(posicion_grid, grid_manager.VACIO)
 		base_conocimiento.registrar(posicion_grid, base_conocimiento.RECARGA)
 		compromiso_rescate = false
@@ -175,6 +188,7 @@ func verificar_celda_actual():
 	if grid_manager.obtener_valor_celda(posicion_grid) == grid_manager.PELIGRO:
 		base_conocimiento.registrar(posicion_grid, base_conocimiento.PELIGRO)
 		base_conocimiento.aprender_peligro(posicion_grid, 60)
+		interfaz_agente.agregar_mensaje("Zona peligrosa detectada en " + str(posicion_grid))
 		
 		if randf() < 0.6:
 			energy_system.consumir_danio(50)
@@ -225,3 +239,27 @@ func actualizar_ui():
 		base_conocimiento.contar(base_conocimiento.PELIGRO),
 		base_conocimiento.contar(base_conocimiento.RECARGA)
 	)
+
+func buscar_celda_no_visitada() -> Array:
+	var mejor_camino := []
+	
+	for y in range(grid_manager.grid.size()):
+		for x in range(grid_manager.grid[y].size()):
+			var pos := Vector2i(x, y)
+			
+			if pos == posicion_grid:
+				continue
+			
+			if not grid_manager.es_posicion_valida(pos):
+				continue
+			
+			if base_conocimiento.conocimientos.has(pos):
+				continue
+			
+			var camino = calcular_camino(posicion_grid, pos)
+			
+			if camino.size() > 0:
+				if mejor_camino.size() == 0 or camino.size() < mejor_camino.size():
+					mejor_camino = camino
+	
+	return mejor_camino
