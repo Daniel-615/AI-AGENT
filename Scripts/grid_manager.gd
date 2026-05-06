@@ -19,32 +19,35 @@ var grid := [
 	[0, 0, 0, 0, 1, 1, 1, 0, 0, 2],
 ]
 
+var icono_persona= preload("res://Sprites/persona.png")
+
 func _ready():
 	queue_redraw()
-
 func _draw():
 	for y in range(grid.size()):
 		for x in range(grid[y].size()):
 			var valor_celda = grid[y][x]
 			var rect = Rect2(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
 			
-			var color := Color.WHITE
+			var color_fondo := Color(0.90, 0.90, 0.90) 
 			
-			match valor_celda:
-				VACIO:
-					color = Color(0.90, 0.90, 0.90)
-				PARED:
-					color = Color(0.15, 0.15, 0.15)
-				PERSONA:
-					color = Color(0.2, 0.7, 1.0)
-				PELIGRO:
-					color = Color(1.0, 0.25, 0.25)
-				RECARGA:
-					color = Color(0.2, 1.0, 0.4)
+			if valor_celda == PARED:
+				color_fondo = Color(0.15, 0.15, 0.15)
+			elif valor_celda == PELIGRO:
+				color_fondo = Color(1.0, 0.25, 0.25)
+			elif valor_celda == RECARGA:
+				color_fondo = Color(0.2, 1.0, 0.4)
+			elif valor_celda == PERSONA:
+				color_fondo = Color(0.2, 0.7, 1.0, 0.3) 
 			
-			draw_rect(rect, color)
-			draw_rect(rect, Color.BLACK, false, 2)
+			draw_rect(rect, color_fondo)
 
+
+			if valor_celda == PERSONA:
+				if icono_persona: 
+					draw_texture_rect(icono_persona, rect, false)
+			
+			draw_rect(rect, Color.BLACK, false, 1)
 func es_posicion_valida(pos: Vector2i) -> bool:
 	if pos.y < 0 or pos.y >= grid.size():
 		return false

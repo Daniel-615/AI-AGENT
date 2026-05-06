@@ -6,7 +6,6 @@ const COSTO_MOV := 4
 # Dependencias
 var knowledge := knowledgeBase.new()
 @onready var grid_manager := get_parent().get_node("GridManager")
-# CAMBIO 1: El nombre del nodo debe ser el que pusiste en la escena
 @onready var hud := get_parent().get_node("CanvasLayer") 
 
 var posicion_grid := Vector2i(0, 0)
@@ -29,6 +28,11 @@ func _process(delta):
 		ejecutar_ciclo()
 
 func ejecutar_ciclo():
+	#estado para evitar que se mueva si se queda sin stamina
+	if energia<= 0: 
+		estado_actual= "Sin energía"
+		notificar_ui()
+		return
 	if camino_actual.is_empty():
 		planificar()
 	
@@ -43,7 +47,6 @@ func planificar():
 		estado_actual = "Misión completada"
 		return
 
-	# CAMBIO 2: Aquí debes usar 'pathFinder', no 'HUDManager'
 	var resultado = pathFinder.a_star(posicion_grid, personas[0], grid_manager, knowledge.memoria_peligro)
 	camino_actual = resultado.camino
 	ultimo_nodos_a = resultado.nodos
@@ -68,7 +71,14 @@ func verificar_celda():
 	if grid_manager.obtener_valor_celda(posicion_grid) == grid_manager.PELIGRO:
 		knowledge.agregar_penalizacion(posicion_grid, 60)
 		knowledge.registrar(posicion_grid, "peligro")
-
+	if grid_manager.es_recarga(posicion_grid):
+		energia += 50
+		knowledge.registrar(posicion_grid,"recarga")
+		estado_actual="Recargando...."  
+	if grid_manager.obtener_valor_celda(posicion_grid) == grid_manager.PELIGRO:
+		energia -= 10
+		knowledge.registrar(posicion_grid, "peligro")
+		estado_actual="Peligro!"
 func actualizar_vista():
 	position = Vector2(posicion_grid * CELL_SIZE) + Vector2(CELL_SIZE/2, CELL_SIZE/2)
 
