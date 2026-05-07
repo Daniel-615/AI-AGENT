@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://byeot2jwbwy3x" path="res://Scripts/UI/interfaz_agente.gd" id="6_m2vww"]
 [ext_resource type="Script" uid="uid://g8l13pjpi5ye" path="res://Scripts/Agente/sensor_agente.gd" id="7_b5uyv"]
 [ext_resource type="AudioStream" uid="uid://bma3x6d1ywgan" path="res://Music/robot-walking.mp3" id="8_l8xc3"]
+[ext_resource type="AudioStream" uid="uid://bmrvm5a5j6k0i" path="res://Music/persona-salvada.mp3" id="9_urgsd"]
+[ext_resource type="AudioStream" uid="uid://7d0ir2w8kftk" path="res://Music/coin.mp3" id="10_btnvu"]
 
 [node name="Main" type="Node2D" unique_id=741580512]
 
@@ -81,7 +83,13 @@ offset_top = 318.0
 offset_right = 821.0
 offset_bottom = 341.0
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=686722333]
+[node name="Musica" type="AudioStreamPlayer" parent="." unique_id=686722333]
 stream = ExtResource("8_l8xc3")
 autoplay = true
 playback_type = 1
+
+[node name="Persona" type="AudioStreamPlayer" parent="." unique_id=596468040]
+stream = ExtResource("9_urgsd")
+
+[node name="Energia" type="AudioStreamPlayer" parent="." unique_id=404141578]
+stream = ExtResource("10_btnvu")

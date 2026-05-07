@@ -60,7 +60,6 @@ func _process(delta):
 	
 	temporizador += delta
 	
-	# El agente murió
 	if energy_system.energia <= 0:
 		interfaz_agente.cambiar_estado(
 			"Sin energía - reiniciando"
@@ -101,7 +100,6 @@ func _process(delta):
 
 
 func reiniciar_agente():
-	# Pausar simulación temporalmente
 	Config.juego_iniciado = false
 	
 	await get_tree().create_timer(2.0).timeout
@@ -110,25 +108,18 @@ func reiniciar_agente():
 		"Nuevo intento usando memoria aprendida"
 	)
 	
-	# Reiniciar posición
 	posicion_grid = Vector2i(0, 0)
 	actualizar_posicion_mundo()
 	
-	# Reiniciar energía
 	energy_system.energia = energy_system.energia_max
 	
-	# Reiniciar navegación
 	camino_actual.clear()
 	objetivo_actual = Vector2i(-1, -1)
 	compromiso_rescate = false
 	
-	# IMPORTANTE:
-	# NO reiniciar memoria_peligro
-	# para que el agente aprenda
 	
 	actualizar_ui()
 	
-	# Reanudar simulación
 	Config.juego_iniciado = true
 
 
@@ -164,7 +155,6 @@ func buscar_objetivo():
 	
 	var recargas = grid_manager.obtener_posiciones_recarga()
 	
-	# Prioridad: energía baja
 	if energy_system.energia <= 25:
 		interfaz_agente.cambiar_estado(
 			"Energía crítica - buscando recarga"
@@ -208,7 +198,9 @@ func buscar_objetivo():
 			)
 			
 			Config.juego_iniciado = false
-		
+			var robot_movimiento= get_parent().get_node("Musica")
+			if robot_movimiento:
+				robot_movimiento.stop()
 		actualizar_ui()
 		return
 	
@@ -329,7 +321,14 @@ func buscar_objetivo():
 func verificar_celda_actual():
 	if grid_manager.es_persona(posicion_grid):
 		personas_rescatadas += 1
-		
+		var persona_rescatada= get_parent().get_node("Persona")
+		if persona_rescatada:
+			persona_rescatada.play()
+			var timer = get_tree().create_timer(1.0)
+			timer.timeout.connect(
+				func():
+					persona_rescatada.stop()
+			)
 		grid_manager.cambiar_valor_celda(
 			posicion_grid,
 			grid_manager.VACIO
@@ -353,7 +352,14 @@ func verificar_celda_actual():
 		interfaz_agente.cambiar_estado(
 			"Recargando energía"
 		)
-	
+		var sonido_energia= get_parent().get_node("Energia")
+		if sonido_energia:
+			sonido_energia.play()
+			var timer = get_tree().create_timer(1.0)
+			timer.timeout.connect(
+				func():
+					sonido_energia.stop()
+			)
 		energy_system.recargar()
 	
 		interfaz_agente.agregar_mensaje(
