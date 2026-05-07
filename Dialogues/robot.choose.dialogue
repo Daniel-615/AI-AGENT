@@ -1,14 +1,4 @@
 ~ start
-Robot: ¡Hola! Bienvenido a la versión beta de nuestro proyecto de Inteligencia Artificial.
-
-Robot: Mi misión es recorrer el mapa, localizar personas en peligro y rescatarlas de la manera más eficiente posible.
-
-Robot: Para tomar decisiones utilizo algoritmos de búsqueda que me permiten analizar rutas, evitar desperdiciar energía y encontrar el mejor camino disponible.
-
-Robot: Sin embargo, debo administrar cuidadosamente mi batería. Si mi energía es demasiado baja, priorizaré buscar una estación de recarga antes de continuar con los rescates.
-
-Robot: Cada algoritmo cambia la manera en la que pienso y exploro el entorno, por lo que podrás observar comportamientos distintos dependiendo del método seleccionado.
-
 Robot: Ahora te toca decidir qué estrategia utilizaré durante la misión.
 
 Robot: ¡Elige entre BFS y A* para comenzar!
