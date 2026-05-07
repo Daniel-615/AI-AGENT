@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://c43kjmtqgavvb"]
+[gd_scene load_steps=7 format=3 uid="uid://c43kjmtqgavvb"]
 
-[ext_resource type="Script" uid="uid://sr2okm74f0ra" path="res://Scripts/Menu/options.gd" id="1_gyit7"]
+[ext_resource type="Script" path="res://Scripts/Menu/options.gd" id="1_gyit7"]
 [ext_resource type="Texture2D" uid="uid://2bv55f7e5x51" path="res://Images/fondo2.jpg" id="2_44vc8"]
-[ext_resource type="Script" uid="uid://k218vq864f2h" path="res://Scripts/Agente/volume.gd" id="3_qf052"]
+[ext_resource type="Script" path="res://Scripts/Agente/volume.gd" id="3_qf052"]
 [ext_resource type="AudioStream" uid="uid://crlr1wwsv3887" path="res://Music/menu-option.mp3" id="3_yslck"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gyit7"]
@@ -20,7 +20,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="Options" type="Control" unique_id=1320331563]
+[node name="Options" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gyit7")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=2009799017]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,7 +38,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.581033, 0.581033, 0.581033, 1)
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1164045035]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,7 +48,7 @@ grow_vertical = 2
 texture = ExtResource("2_44vc8")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1051531408]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,27 +63,27 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer" unique_id=1776811158]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="Volumen" type="Label" parent="VBoxContainer/VBoxContainer" unique_id=1813479574]
+[node name="Volumen" type="Label" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_gyit7")
 text = "Ajusta tu volumen"
 
-[node name="volume" type="HSlider" parent="VBoxContainer/VBoxContainer" unique_id=1691480385]
+[node name="volume" type="HSlider" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("3_qf052")
 
-[node name="Atras" type="Button" parent="VBoxContainer" unique_id=1528365760]
+[node name="Atras" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "Atras
 "
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1904881883]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_yslck")
 autoplay = true
 

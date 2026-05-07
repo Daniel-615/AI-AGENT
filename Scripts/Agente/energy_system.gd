@@ -2,7 +2,7 @@ extends Node
 
 var energia := 100
 var energia_max := 100
-var costo_movimiento := 4
+var costo_movimiento := 3
 
 func consumir_movimiento():
 	energia -= costo_movimiento

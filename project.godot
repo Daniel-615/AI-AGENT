@@ -16,12 +16,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="AI-AGENT"
 run/main_scene="res://Escenas/menu.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.3", "Forward Plus")
 
 [autoload]
 
 Config="*res://Scripts/config.gd"
-DialogueManager="*uid://c3rodes2l3gxb"
+DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 
 [display]
 
