@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhp1f505xn5od"]
+[gd_scene format=3 uid="uid://dhp1f505xn5od"]
 
-[ext_resource type="Script" path="res://Scripts/Menu/game_options.gd" id="1_mqwx1"]
+[ext_resource type="Script" uid="uid://vvqgtwpmyv3b" path="res://Scripts/Menu/game_options.gd" id="1_mqwx1"]
 [ext_resource type="Texture2D" uid="uid://2bv55f7e5x51" path="res://Images/fondo2.jpg" id="2_wnchd"]
+[ext_resource type="AudioStream" uid="uid://crlr1wwsv3887" path="res://Music/menu-option.mp3" id="3_w1ktr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p25xy"]
 bg_color = Color(0, 0, 0, 0.368627)
@@ -10,7 +11,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="Options" type="Control"]
+[node name="Options" type="Control" unique_id=726163038]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,7 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mqwx1")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1890067789]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,7 +29,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.581033, 0.581033, 0.581033, 1)
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=3530581]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,7 +39,7 @@ grow_vertical = 2
 texture = ExtResource("2_wnchd")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1754086082]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,24 +54,28 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 22
 
-[node name="BFS" type="Button" parent="VBoxContainer"]
+[node name="BFS" type="Button" parent="VBoxContainer" unique_id=233797788]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "BFS"
 
-[node name="A*" type="Button" parent="VBoxContainer"]
+[node name="A*" type="Button" parent="VBoxContainer" unique_id=2012088429]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "A*"
 
-[node name="Atras" type="Button" parent="VBoxContainer"]
+[node name="Atras" type="Button" parent="VBoxContainer" unique_id=1609253500]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxFlat_p25xy")
 text = "Atras
 "
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=248269303]
+stream = ExtResource("3_w1ktr")
+autoplay = true
 
 [connection signal="pressed" from="VBoxContainer/BFS" to="." method="_on_bfs_pressed"]
 [connection signal="pressed" from="VBoxContainer/A*" to="." method="_on_a_pressed"]

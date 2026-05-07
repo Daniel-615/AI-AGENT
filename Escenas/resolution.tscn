@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://ph186p3nt7m7"]
+
+[ext_resource type="Script" uid="uid://dfaas3suc0uv6" path="res://Scripts/Menu/resolution.gd" id="1_56t46"]
+[ext_resource type="Texture2D" uid="uid://2bv55f7e5x51" path="res://Images/fondo2.jpg" id="2_72eld"]
+[ext_resource type="AudioStream" uid="uid://crlr1wwsv3887" path="res://Music/menu-option.mp3" id="3_wloi1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_56t46"]
+bg_color = Color(0, 0, 0, 0.3254902)
+border_width_left = 5
+border_width_right = 5
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f33t4"]
+bg_color = Color(0, 0, 0, 0.32941177)
+border_width_left = 5
+border_width_bottom = 5
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72eld"]
+bg_color = Color(0, 0, 0, 0.30980393)
+border_width_left = 5
+border_width_right = 5
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Options" type="Control" unique_id=559739332]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_56t46")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1143234818]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.581033, 0.581033, 0.581033, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=560028375]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_72eld")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1875612639]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.5
+offset_top = -161.5
+offset_right = 300.5
+offset_bottom = 161.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="ResolutionLabel" type="Label" parent="VBoxContainer" unique_id=1534704032]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_56t46")
+text = "Elige tu resolución"
+
+[node name="Resolution" type="OptionButton" parent="VBoxContainer" unique_id=1690008791]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_f33t4")
+selected = 0
+item_count = 3
+popup/item_0/text = "Modo Ventana"
+popup/item_0/id = 0
+popup/item_1/text = "Pantalla completa"
+popup/item_1/id = 1
+popup/item_2/text = "Pantalla completa sin bordes"
+popup/item_2/id = 2
+
+[node name="Atras" type="Button" parent="VBoxContainer" unique_id=120799732]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_72eld")
+text = "Atras"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=923189650]
+stream = ExtResource("3_wloi1")
+autoplay = true
+
+[connection signal="item_selected" from="VBoxContainer/Resolution" to="." method="_on_resolution_item_selected"]
+[connection signal="pressed" from="VBoxContainer/Atras" to="." method="_on_atras_pressed"]

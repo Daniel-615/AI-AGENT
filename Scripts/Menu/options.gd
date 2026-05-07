@@ -10,3 +10,7 @@ func _on_atras_pressed() -> void:
 func _on_volume_pressed() -> void:
 	get_tree().change_scene_to_file("res://Escenas/game_volume.tscn")
 	
+
+
+func _on_resolution_pressed() -> void:
+	get_tree().change_scene_to_file("res://Escenas/resolution.tscn")
