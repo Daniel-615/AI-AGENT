@@ -1,0 +1,18 @@
+~ start
+Ary: ¡Hola! Bienvenido a nuestro proyecto de Inteligencia Artificial.
+
+Angel: Este juego fue desarrollado como una simulación donde un robot autónomo debe explorar un mapa y rescatar personas atrapadas.
+
+Ary: Para lograrlo, el robot utiliza algoritmos de búsqueda que le permiten analizar rutas y tomar decisiones según la situación del entorno.
+
+Angel: Durante el recorrido, la IA también debe administrar su energía. Si el nivel de batería es demasiado bajo, el robot priorizará buscar estaciones de recarga antes de continuar los rescates.
+
+Ary: Nuestro objetivo fue demostrar cómo los algoritmos de búsqueda pueden aplicarse en problemas reales, como navegación, optimización de rutas y toma de decisiones inteligentes.
+
+Angel: En esta versión podrás probar diferentes métodos de búsqueda, observar cómo se comporta la IA y comparar cuál estrategia encuentra soluciones más eficientes.
+
+Ary: Esperamos que disfrutes la experiencia y que puedas aprender un poco sobre cómo funcionan este tipo de sistemas inteligentes.
+
+Angel: ¡Ahora es momento de comenzar la misión y poner a prueba la IA!
+
+=> END

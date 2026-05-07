@@ -179,7 +179,6 @@ func buscar_objetivo():
 			actualizar_ui()
 			return
 	
-	# No hay personas -> explorar
 	if personas.size() == 0:
 		camino_actual = buscar_celda_no_visitada()
 		
