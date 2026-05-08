@@ -2,7 +2,7 @@ extends Node
 
 var metodo_busqueda := "A"
 var juego_iniciado := false
-
+var dialogo_iniciado := false
 
 func change_displayMode(index):
 

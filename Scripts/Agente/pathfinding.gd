@@ -44,7 +44,7 @@ func bfs(
 			if grid_manager.es_posicion_valida(vecino) \
 			and not visitados.has(vecino):
 				
-				# BFS evita peligros
+				
 				if grid_manager.obtener_valor_celda(vecino) \
 				== grid_manager.PELIGRO:
 					continue

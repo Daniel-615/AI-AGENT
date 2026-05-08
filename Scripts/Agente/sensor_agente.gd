@@ -26,3 +26,5 @@ func percibir(posicion_agente: Vector2i, grid_manager: Node, base_conocimiento: 
 			elif valor == grid_manager.RECARGA:
 				base_conocimiento.registrar(pos, base_conocimiento.RECARGA)
 				interfaz_agente.agregar_mensaje("Sensor detectó recarga en " + str(pos))
+			elif valor == grid_manager.PARED:
+				interfaz_agente.agregar_mensaje("Sensor detectó pared en"+ str(pos))

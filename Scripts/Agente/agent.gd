@@ -38,9 +38,6 @@ func _ready():
 	interfaz_agente.configurar(
 		get_parent().get_node("CanvasLayer")
 	)
-	
-	print("Método seleccionado:", Config.metodo_busqueda)
-	
 	actualizar_posicion_mundo()
 	actualizar_ui()
 	
@@ -66,6 +63,8 @@ func _process(delta):
 		)
 		
 		camino_actual.clear()
+		
+		interfaz_agente.agregar_muerte()
 		
 		reiniciar_agente()
 		return
@@ -477,6 +476,7 @@ func actualizar_ui():
 		base_conocimiento.contar(
 			base_conocimiento.RECARGA
 		)
+		
 	)
 
 

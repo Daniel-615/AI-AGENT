@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://0n7hwviyyly4"]
+[gd_scene format=3 uid="uid://60gpe0yw5qbs"]
 
 [ext_resource type="Script" path="res://addons/dialogue_manager/components/find_in_files.gd" id="1_3xicy"]
 
