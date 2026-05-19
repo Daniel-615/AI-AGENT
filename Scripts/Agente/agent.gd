@@ -65,7 +65,7 @@ func _process(delta):
 		camino_actual.clear()
 		
 		interfaz_agente.agregar_muerte()
-		
+		Config.muertes+=1
 		reiniciar_agente()
 		return
 	
@@ -190,17 +190,44 @@ func buscar_objetivo():
 			interfaz_agente.cambiar_estado(
 				"Simulación terminada"
 			)
-			
+
 			interfaz_agente.agregar_mensaje(
 				"Todas las personas fueron rescatadas"
 			)
-			
+
 			Config.juego_iniciado = false
-			var robot_movimiento= get_parent().get_node("Musica")
+
+			Config.personas_rescatadas = personas_rescatadas
+
+			Config.peligros_detectados = (
+				base_conocimiento.contar(
+					base_conocimiento.PELIGRO
+				)
+			)
+
+			Config.recargas_encontradas = (
+				base_conocimiento.contar(
+					base_conocimiento.RECARGA
+				)
+			)
+
+			Config.bfs_nodos = ultimo_bfs_nodos
+			Config.a_nodos = ultimo_a_nodos
+
+			var robot_movimiento = get_parent().get_node("Musica")
+
 			if robot_movimiento:
 				robot_movimiento.stop()
-		actualizar_ui()
-		return
+
+			actualizar_ui()
+
+			await get_tree().create_timer(1.5).timeout
+
+			get_tree().change_scene_to_file(
+				"res://Escenas/victoria.tscn"
+			)
+
+			return
 	
 	var estoy_en_recarga = grid_manager.es_recarga(
 		posicion_grid

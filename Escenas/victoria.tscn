@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://b88cfxpb2i03m"]
+
+[ext_resource type="Script" uid="uid://bt8q0eokoiqur" path="res://Scripts/Menu/gameover.gd" id="1_qte02"]
+[ext_resource type="Texture2D" uid="uid://c4gifu0qrv8sl" path="res://Images/victoria.png" id="2_qte02"]
+[ext_resource type="AudioStream" uid="uid://bymaubuxjnanq" path="res://Music/victoria.mp3" id="3_qte02"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ubp5t"]
+font_size = 45
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xn1rc"]
+bg_color = Color(0, 0.0036487975, 0, 0.21400002)
+border_width_left = 20
+border_width_top = 20
+border_width_right = 20
+border_width_bottom = 20
+border_color = Color(0.7172856, 0.80830514, 0.93813705, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqifn"]
+bg_color = Color(0.42754805, 0.6155507, 0.8221194, 0.26200002)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qte02"]
+font_size = 25
+
+[node name="Options" type="Control" unique_id=940383332]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qte02")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1454878337]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.581033, 0.581033, 0.581033, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=365756334]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qte02")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=981078292]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -609.5
+offset_top = -107.0
+offset_right = 609.5
+offset_bottom = 107.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0072602, 1.887025)
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=634637101]
+layout_mode = 2
+text = "¡Juego terminado!, ¿Deseas jugar otra vez?"
+label_settings = SubResource("LabelSettings_ubp5t")
+
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=943374061]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxFlat_xn1rc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wqifn")
+text = "Volver a Jugar"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="." unique_id=1557516036]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -355.0
+offset_bottom = 391.0
+grow_horizontal = 0
+scale = Vector2(1.0112711, 0.63933325)
+theme_override_constants/separation = 22
+
+[node name="Label" type="Label" parent="VBoxContainer2" unique_id=1821355700]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Estadisticas:"
+label_settings = SubResource("LabelSettings_ubp5t")
+
+[node name="labelMuerte" type="Label" parent="VBoxContainer2" unique_id=1140872698]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Muertes: "
+label_settings = SubResource("LabelSettings_qte02")
+
+[node name="labelPeligros" type="Label" parent="VBoxContainer2" unique_id=1659937988]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Peligros:"
+label_settings = SubResource("LabelSettings_qte02")
+
+[node name="labelRecargas" type="Label" parent="VBoxContainer2" unique_id=24029627]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Recargas:"
+label_settings = SubResource("LabelSettings_qte02")
+
+[node name="labelRescatados" type="Label" parent="VBoxContainer2" unique_id=1349487042]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Rescatados:"
+label_settings = SubResource("LabelSettings_qte02")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="VBoxContainer2/labelRescatados" unique_id=1720796241]
+stream = ExtResource("3_qte02")
+autoplay = true
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]
