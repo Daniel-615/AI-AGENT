@@ -24,12 +24,16 @@ var temporizador := 0.0
 var ultimo_bfs_nodos := 0
 var ultimo_a_nodos := 0
 
-var textura_agente = preload("res://Sprites/robot.png")
+var animated_sprite: AnimatedSprite2D
+
+
 
 
 func _ready():
 	grid_manager = get_parent().get_node("GridManager")
 	pathfinding = get_node("Pathfinding")
+	animated_sprite = get_node("AnimatedSprite2D")
+	animated_sprite.play("walk")
 	energy_system = get_node("EnergySystem")
 	base_conocimiento = get_node("BaseConocimiento")
 	interfaz_agente = get_node("InterfazAgente")
@@ -48,7 +52,6 @@ func _ready():
 		interfaz_agente
 	)
 	
-	queue_redraw()
 
 
 func _process(delta):
@@ -76,7 +79,16 @@ func _process(delta):
 			buscar_objetivo()
 		
 		if camino_actual.size() > 0:
-			posicion_grid = camino_actual.pop_front()
+			var nueva_posicion = camino_actual.pop_front()
+
+			var direccion = nueva_posicion - posicion_grid
+
+			if direccion.x < 0:
+				animated_sprite.flip_h = true
+			elif direccion.x > 0:
+				animated_sprite.flip_h = false
+
+			posicion_grid = nueva_posicion
 			
 			energy_system.consumir_movimiento()
 			
@@ -472,23 +484,6 @@ func actualizar_posicion_mundo():
 		posicion_grid.y * CELL_SIZE
 		+ CELL_SIZE / 2
 	)
-
-
-func _draw():
-	if textura_agente:
-		var size = CELL_SIZE * 0.8
-		
-		var rect = Rect2(
-			Vector2(-size / 2, -size / 2),
-			Vector2(size, size)
-		)
-		
-		draw_texture_rect(
-			textura_agente,
-			rect,
-			false
-		)
-
 
 func actualizar_ui():
 	interfaz_agente.actualizar(
