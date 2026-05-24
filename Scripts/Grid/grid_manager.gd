@@ -15,14 +15,20 @@ const PROB_PARED := 0.15
 const PROB_PELIGRO := 0.10
 
 var grid := []
+var contenedor_fuegos: Node2D
 
 var icono_persona = preload("res://Sprites/persona.png")
 var icono_bebida = preload("res://Sprites/energia.png")
+var icono_piedra = preload("res://Sprites/piedra.png")
+var escena_fuego = preload("res://Escenas/fire.tscn")
 
 
 func _ready():
+	contenedor_fuegos = get_parent().get_node("Fuegos")
+	
 	randomize()
 	generar_mapa()
+	generar_fuegos()
 	queue_redraw()
 
 
@@ -58,6 +64,28 @@ func generar_mapa():
 	# Generar elementos seguros
 	generar_personas_seguras(5)
 	generar_recargas_seguras(3)
+	
+	
+func generar_fuegos():
+
+	for hijo in contenedor_fuegos.get_children():
+		hijo.queue_free()
+
+	for y in range(ALTO):
+		for x in range(ANCHO):
+
+			if grid[y][x] == PELIGRO:
+
+				var fuego = escena_fuego.instantiate()
+				
+				fuego.play("fire")
+
+				fuego.position = Vector2(
+					x * CELL_SIZE + CELL_SIZE / 2,
+					y * CELL_SIZE + CELL_SIZE / 2
+				)
+
+				contenedor_fuegos.add_child(fuego)
 
 
 func generar_personas_seguras(cantidad):
@@ -196,10 +224,10 @@ func _draw():
 					color = Color(0.90, 0.90, 0.90)
 
 				PARED:
-					color = Color(0.15, 0.15, 0.15)
+					color = Color(0.90, 0.90, 0.90)
 
 				PELIGRO:
-					color = Color(1.0, 0.25, 0.25)
+					color = Color(0.90, 0.90, 0.90)
 
 				PERSONA, RECARGA:
 					color = Color(0.90, 0.90, 0.90)
@@ -209,6 +237,15 @@ func _draw():
 
 			# Sprites
 			match valor_celda:
+				
+				PARED:
+					if icono_piedra:
+						draw_texture_rect(
+							icono_piedra,
+							rect,
+							false
+						)
+				
 				PERSONA:
 					if icono_persona:
 						draw_texture_rect(
@@ -300,3 +337,4 @@ func obtener_posiciones_recarga() -> Array:
 				estaciones.append(Vector2i(x, y))
 
 	return estaciones
+	

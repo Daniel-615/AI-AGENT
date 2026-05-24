@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Agente/sensor_agente.gd" id="7_b5uyv"]
 [ext_resource type="AudioStream" uid="uid://bma3x6d1ywgan" path="res://Music/robot-walking.mp3" id="8_l8xc3"]
 [ext_resource type="AudioStream" uid="uid://bmrvm5a5j6k0i" path="res://Music/persona-salvada.mp3" id="9_urgsd"]
-[ext_resource type="AudioStream" uid="uid://7d0ir2w8kftk" path="res://Music/coin.mp3" id="10_btnvu"]
+[ext_resource type="AudioStream" uid="uid://ouhy8ysqgxx2" path="res://Music/coin.mp3" id="10_btnvu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jmcmi"]
 atlas = ExtResource("3_gxnwk")
@@ -109,6 +109,8 @@ cache/0/16/0/scale = 1.0
 
 [node name="GridManager" type="Node2D" parent="."]
 script = ExtResource("1_ijxpu")
+
+[node name="Fuegos" type="Node2D" parent="."]
 
 [node name="Agent" type="Node2D" parent="."]
 script = ExtResource("2_dllou")
