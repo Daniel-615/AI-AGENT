@@ -163,41 +163,75 @@ func buscar_objetivo():
 	var personas = base_conocimiento.obtener_posiciones_por_tipo(
 		base_conocimiento.PERSONA_DETECTADA
 	)
-	
+
 	var recargas = grid_manager.obtener_posiciones_recarga()
-	
-	if energy_system.energia <= 25:
+
+	var persona_urgente := []
+
+	for persona in personas:
+		var camino = calcular_camino(
+			posicion_grid,
+			persona
+		)
+
+		if camino.size() > 0:
+			var costo = (
+				camino.size()
+				* energy_system.costo_movimiento
+			)
+
+			var energia_restante = (
+				energy_system.energia - costo
+			)
+			if energia_restante <= 1:
+				persona_urgente = camino
+				break
+
+	if energy_system.energia <= 25 \
+	and persona_urgente.size() == 0:
+
 		interfaz_agente.cambiar_estado(
 			"Energía crítica - buscando recarga"
 		)
-		
+
 		var mejor_camino_recarga := []
-		
+
 		for r in recargas:
 			var camino = calcular_camino(
 				posicion_grid,
 				r
 			)
-			
+
 			if camino.size() > 0:
 				if mejor_camino_recarga.size() == 0 \
 				or camino.size() < mejor_camino_recarga.size():
-					
+
 					mejor_camino_recarga = camino
-		
+
 		if mejor_camino_recarga.size() > 0:
 			camino_actual = mejor_camino_recarga
 			actualizar_ui()
 			return
-	
+
+	if persona_urgente.size() > 0:
+		interfaz_agente.cambiar_estado(
+			"Rescate urgente"
+		)
+
+		camino_actual = persona_urgente
+		objetivo_actual = persona_urgente[-1]
+
+		actualizar_ui()
+		return
+
 	if personas.size() == 0:
 		camino_actual = buscar_celda_no_visitada()
-		
+
 		if camino_actual.size() > 0:
 			interfaz_agente.cambiar_estado(
 				"Explorando entorno"
 			)
-		
+
 		else:
 			interfaz_agente.cambiar_estado(
 				"Simulación terminada"
@@ -240,120 +274,119 @@ func buscar_objetivo():
 			)
 
 			return
-	
+
 	var estoy_en_recarga = grid_manager.es_recarga(
 		posicion_grid
 	)
-	
+
 	if estoy_en_recarga:
 		energy_system.recargar()
-	
+
 	var mejor_camino_persona := []
-	
+
 	for persona in personas:
 		var camino = calcular_camino(
 			posicion_grid,
 			persona
 		)
-		
+
 		if camino.size() > 0:
 			if mejor_camino_persona.size() == 0 \
 			or camino.size() < mejor_camino_persona.size():
-				
+
 				mejor_camino_persona = camino
-	
+
 	if mejor_camino_persona.size() == 0:
 		interfaz_agente.cambiar_estado(
 			"Sin camino a persona"
 		)
-		
+
 		actualizar_ui()
 		return
-	
+
 	var costo_ida = (
 		mejor_camino_persona.size()
 		* energy_system.costo_movimiento
 	)
-	
+
 	var energia_minima_segura = 12
-	
+
 	if estoy_en_recarga \
 	and energy_system.tiene_energia_suficiente(costo_ida):
-		
+
 		interfaz_agente.cambiar_estado("Rescatando")
-		
+
 		objetivo_actual = mejor_camino_persona[-1]
 		compromiso_rescate = false
 		camino_actual = mejor_camino_persona
-		
+
 		actualizar_ui()
 		return
-	
+
 	var costo_regreso_recarga = INF
-	
+
 	for r in recargas:
 		var camino_recarga = calcular_camino(
 			mejor_camino_persona[-1],
 			r
 		)
-		
+
 		if camino_recarga.size() > 0:
 			costo_regreso_recarga = min(
 				costo_regreso_recarga,
 				camino_recarga.size()
 				* energy_system.costo_movimiento
 			)
-	
+
 	var costo_total_seguro = (
 		costo_ida + costo_regreso_recarga
 	)
-	
+
 	if energy_system.tiene_energia_suficiente(
 		costo_total_seguro
 	) or energy_system.tiene_energia_suficiente(
 		costo_ida + energia_minima_segura
 	):
-		
+
 		interfaz_agente.cambiar_estado("Rescatando")
-		
+
 		objetivo_actual = mejor_camino_persona[-1]
 		compromiso_rescate = false
 		camino_actual = mejor_camino_persona
-		
+
 		actualizar_ui()
 		return
-	
+
 	# Buscar recarga
 	if recargas.size() > 0 and not estoy_en_recarga:
 		interfaz_agente.cambiar_estado(
 			"Buscando recarga"
 		)
-		
+
 		var mejor_camino_recarga := []
-		
+
 		for r in recargas:
 			var camino = calcular_camino(
 				posicion_grid,
 				r
 			)
-			
+
 			if camino.size() > 0:
 				if mejor_camino_recarga.size() == 0 \
 				or camino.size() < mejor_camino_recarga.size():
-					
+
 					mejor_camino_recarga = camino
-		
+
 		camino_actual = mejor_camino_recarga
-		
+
 		actualizar_ui()
 		return
-	
+
 	interfaz_agente.cambiar_estado(
 		"Esperando decisión"
 	)
-	
-	actualizar_ui()
 
+	actualizar_ui()
 
 func verificar_celda_actual():
 	if grid_manager.es_persona(posicion_grid):

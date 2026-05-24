@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bacjv1lips1qa"]
+[gd_scene format=3 uid="uid://bacjv1lips1qa"]
 
 [ext_resource type="Texture2D" uid="uid://b6ju6iel1nwhy" path="res://Sprites/png_04.png" id="1_nrhov"]
 [ext_resource type="Texture2D" uid="uid://bakajri4518cv" path="res://Sprites/png_05.png" id="2_mbmsj"]
@@ -37,7 +37,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Fire" type="AnimatedSprite2D"]
+[node name="Fire" type="AnimatedSprite2D" unique_id=1627565402]
 position = Vector2(4, -114)
 scale = Vector2(0.186022, 0.140257)
 sprite_frames = SubResource("SpriteFrames_rogca")
